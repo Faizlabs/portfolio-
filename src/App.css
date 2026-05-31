@@ -1,0 +1,66 @@
+/* ---- App Layout ---- */
+.app {
+  position: relative;
+  min-height: 100vh;
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- CRT Scan Line ---- */
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 255, 136, 0.07) 20%, rgba(0, 255, 136, 0.12) 50%, rgba(0, 255, 136, 0.07) 80%, transparent 100%);
+  animation: scanline-move 8s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.8;
+}
+
+@keyframes scanline-move {
+  0% { top: -3px; }
+  100% { top: 100vh; }
+}
+
+/* ---- CRT Scanline Overlay ---- */
+.app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.015) 0px,
+    rgba(0, 0, 0, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* ---- Corner Vignette ---- */
+.app::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 65%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Section Separators ---- */
+.main > section + section::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  max-width: 200px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent, var(--border-glass), transparent);
+}

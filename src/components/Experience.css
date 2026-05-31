@@ -1,0 +1,101 @@
+/* ---- Experience ---- */
+.experience__timeline {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.experience__line {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent-green), rgba(0, 255, 136, 0.05));
+  border-radius: 2px;
+}
+
+.experience__item {
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 32px;
+}
+
+.experience__item:last-child {
+  margin-bottom: 0;
+}
+
+.experience__dot {
+  position: absolute;
+  left: 8px;
+  top: 24px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 2px solid var(--accent-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-green);
+  z-index: 2;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+}
+
+.experience__card {
+  padding: 24px;
+}
+
+.experience__card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.experience__role {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.experience__org {
+  font-size: 0.9rem;
+  color: var(--accent-green);
+  font-weight: 500;
+}
+
+.experience__points {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.experience__point {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.experience__point-marker {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  flex-shrink: 0;
+  margin-top: 8px;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .experience__item {
+    padding-left: 50px;
+  }
+}

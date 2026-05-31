@@ -1,0 +1,134 @@
+/* ---- About ---- */
+.about__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Terminal */
+.about__terminal {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.about__terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.about__terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.about__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.about__dot--red { background: #ff5f57; }
+.about__dot--yellow { background: #febc2e; }
+.about__dot--green { background: #28c840; }
+
+.about__terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.about__terminal-body {
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+.about__terminal-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.about__prompt {
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
+.about__cmd {
+  color: var(--accent-blue);
+}
+
+.about__terminal-output {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+
+.about__terminal-output--accent {
+  color: var(--accent-green);
+  opacity: 0.8;
+}
+
+.about__cursor {
+  color: var(--accent-green);
+  animation: blink 1s step-end infinite;
+}
+
+/* Info Cards */
+.about__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about__card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+.about__card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--accent-green-dim);
+  color: var(--accent-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.about__card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.about__card-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.about__card-value {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+  }
+}
