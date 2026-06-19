@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { ChevronDown, ExternalLink, Terminal, FileText } from 'lucide-react';
+import { ChevronDown, ExternalLink, Terminal, FileText, ArrowRight } from 'lucide-react';
 import './Hero.css';
 
 const roles = [
@@ -13,7 +13,13 @@ export default function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    // Trigger staged entrance animations
+    setTimeout(() => setLoaded(true), 200);
+  }, []);
 
   useEffect(() => {
     const currentRole = roles[roleIndex];
@@ -49,34 +55,43 @@ export default function Hero() {
   return (
     <section className="hero" id="home">
       <div className="hero__bg-grid" />
-      <div className="hero__content container">
-        <div className="hero__badge badge badge-green">
+
+      {/* Floating decorative elements */}
+      <div className="hero__float hero__float--1" />
+      <div className="hero__float hero__float--2" />
+      <div className="hero__float hero__float--3" />
+      <div className="hero__orb hero__orb--1" />
+      <div className="hero__orb hero__orb--2" />
+
+      <div className={`hero__content container ${loaded ? 'hero__content--loaded' : ''}`}>
+        <div className="hero__badge badge badge-green hero__entrance hero__entrance--1">
           <Terminal size={14} />
           Open to Opportunities
         </div>
 
-        <h1 className="hero__name">
+        <h1 className="hero__name hero__entrance hero__entrance--2">
           <span className="hero__greeting">Hi, I'm</span>
           <span className="hero__name-text">
             Faiz Farooqui
           </span>
         </h1>
 
-        <div className="hero__role">
+        <div className="hero__role hero__entrance hero__entrance--3">
           <span className="hero__role-prefix">$&gt;&nbsp;</span>
           <span className="hero__role-text">{displayedText}</span>
           <span className="hero__cursor">|</span>
         </div>
 
-        <p className="hero__desc">
+        <p className="hero__desc hero__entrance hero__entrance--4">
           BSc Computer Science student passionate about cybersecurity, threat hunting, and security engineering.
           Building real-world security tools while developing skills in SOC operations, OSINT, and application security.
         </p>
 
-        <div className="hero__actions">
-          <button className="btn btn-primary" onClick={() => scrollTo('projects')}>
+        <div className="hero__actions hero__entrance hero__entrance--5">
+          <button className="btn btn-primary hero__btn-primary" onClick={() => scrollTo('projects')}>
             <ExternalLink size={18} />
             View My Work
+            <ArrowRight size={16} className="hero__btn-arrow" />
           </button>
           <a href="/resume%20main.pdf" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
             <FileText size={18} />
@@ -87,7 +102,7 @@ export default function Hero() {
           </button>
         </div>
 
-        <div className="hero__stats">
+        <div className="hero__stats hero__entrance hero__entrance--6">
           <div className="hero__stat">
             <span className="hero__stat-value">2+</span>
             <span className="hero__stat-label">Security Projects</span>

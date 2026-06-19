@@ -1,4 +1,4 @@
-/* ---- Footer ---- */
+/* ---- Footer (UPGRADED) ---- */
 .footer {
   position: relative;
   padding: 48px 0 24px;
@@ -13,6 +13,17 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--accent-green), var(--accent-blue), transparent);
   opacity: 0.5;
+}
+
+.footer__glow::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.15), rgba(0, 212, 255, 0.15), transparent);
+  filter: blur(4px);
 }
 
 .footer__inner {
@@ -34,6 +45,11 @@
   align-items: center;
   gap: 8px;
   color: var(--accent-green);
+  transition: all 0.3s ease;
+}
+
+.footer__logo:hover {
+  text-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
 }
 
 .footer__logo-text {
@@ -62,16 +78,22 @@
   align-items: center;
   justify-content: center;
   color: var(--text-muted);
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.footer__social:nth-child(1) { transition-delay: 0s; }
+.footer__social:nth-child(2) { transition-delay: 0.05s; }
+.footer__social:nth-child(3) { transition-delay: 0.1s; }
 
 .footer__social:hover {
   color: var(--accent-green);
   border-color: rgba(0, 255, 136, 0.3);
   background: rgba(0, 255, 136, 0.05);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.15);
 }
 
+/* Back to top — Bounce + Glow */
 .footer__top {
   width: 40px;
   height: 40px;
@@ -81,14 +103,21 @@
   align-items: center;
   justify-content: center;
   color: var(--accent-green);
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: top-bounce 3s ease-in-out infinite;
+}
+
+@keyframes top-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 .footer__top:hover {
   background: var(--accent-green-dim);
   border-color: var(--accent-green);
-  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
-  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 40px rgba(0, 255, 136, 0.1);
+  transform: translateY(-6px);
+  animation: none;
 }
 
 .footer__bottom {
@@ -109,8 +138,19 @@
   color: var(--text-muted);
 }
 
+/* Heartbeat pulse */
 .footer__heart {
   color: var(--accent-red);
+  display: inline-block;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.2); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.15); }
+  56% { transform: scale(1); }
 }
 
 @media (max-width: 768px) {
@@ -122,5 +162,8 @@
     flex-direction: column;
     gap: 8px;
     text-align: center;
+  }
+  .footer__top {
+    animation: none;
   }
 }

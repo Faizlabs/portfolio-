@@ -1,0 +1,115 @@
+/* ---- Custom Cursor ---- */
+.custom-cursor {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  mix-blend-mode: screen;
+}
+
+.cursor__dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow:
+    0 0 10px var(--accent-green),
+    0 0 20px rgba(0, 255, 136, 0.4),
+    0 0 40px rgba(0, 255, 136, 0.15);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              height 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              background 0.3s ease,
+              box-shadow 0.3s ease;
+  pointer-events: none;
+  z-index: 100001;
+}
+
+.cursor__ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 255, 136, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              height 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.3s ease,
+              background 0.3s ease,
+              opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 100000;
+  opacity: 0.7;
+}
+
+/* Cursor trail particles */
+.cursor__trail {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(0, 255, 136, 0.6);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+/* Hover states */
+.cursor--hover .cursor__dot {
+  width: 14px;
+  height: 14px;
+  background: rgba(0, 255, 136, 0.9);
+  box-shadow:
+    0 0 15px var(--accent-green),
+    0 0 30px rgba(0, 255, 136, 0.5),
+    0 0 60px rgba(0, 255, 136, 0.2);
+}
+
+.cursor--hover .cursor__ring {
+  width: 52px;
+  height: 52px;
+  border-color: rgba(0, 255, 136, 0.8);
+  opacity: 1;
+  background: rgba(0, 255, 136, 0.04);
+}
+
+/* Click state */
+.cursor--click .cursor__dot {
+  width: 6px;
+  height: 6px;
+}
+
+.cursor--click .cursor__ring {
+  width: 28px;
+  height: 28px;
+  border-color: rgba(0, 255, 136, 1);
+}
+
+/* Text hover state */
+.cursor--text .cursor__dot {
+  width: 3px;
+  height: 24px;
+  border-radius: 2px;
+  background: var(--accent-green);
+}
+
+.cursor--text .cursor__ring {
+  opacity: 0;
+}
+
+/* Hide on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-cursor {
+    display: none !important;
+  }
+}

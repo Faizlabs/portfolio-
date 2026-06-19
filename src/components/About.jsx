@@ -19,7 +19,7 @@ export default function About() {
 
         <div className="about__grid">
           {/* Terminal Card */}
-          <div className="about__terminal glass reveal">
+          <div className="about__terminal glass reveal-left">
             <div className="about__terminal-bar">
               <div className="about__terminal-dots">
                 <span className="about__dot about__dot--red" />
@@ -54,7 +54,7 @@ export default function About() {
           {/* Info Cards */}
           <div className="about__info">
             {highlights.map((item, i) => (
-              <div className={`about__card glass glass-hover reveal reveal-delay-${i + 1}`} key={item.label}>
+              <div className={`about__card glass glass-hover reveal-right reveal-delay-${i + 1}`} key={item.label}>
                 <div className="about__card-icon">
                   {item.icon}
                 </div>

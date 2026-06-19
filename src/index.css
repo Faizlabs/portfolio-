@@ -1,6 +1,6 @@
 /* ============================================
    FAIZ FAROOQUI — CYBERSECURITY PORTFOLIO
-   Design System & Global Styles
+   Design System & Global Styles (UPGRADED)
    ============================================ */
 
 /* ---- CSS Custom Properties ---- */
@@ -48,6 +48,7 @@
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ---- Reset & Base ---- */
@@ -101,7 +102,7 @@ img {
 }
 
 button {
-  cursor: pointer;
+  cursor: none;
   border: none;
   outline: none;
   background: none;
@@ -190,12 +191,14 @@ input, textarea {
   transform: translateY(-4px);
 }
 
-/* ---- Buttons ---- */
+/* ============================================
+   PREMIUM BUTTONS (UPGRADED)
+   ============================================ */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 14px 32px;
+  gap: 10px;
+  padding: 15px 34px;
   border-radius: var(--radius-md);
   font-family: var(--font-heading);
   font-weight: 600;
@@ -203,32 +206,136 @@ input, textarea {
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
+  z-index: 1;
+  letter-spacing: 0.3px;
 }
 
+/* Shine sweep effect on all buttons */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 40%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.08) 60%,
+    transparent 100%
+  );
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+/* Icon animation on hover */
+.btn svg {
+  transition: transform var(--transition-base);
+}
+
+.btn:hover svg {
+  transform: translateX(3px) scale(1.1);
+}
+
+/* Primary Button — Animated gradient */
 .btn-primary {
   background: linear-gradient(135deg, var(--accent-green), #00cc6a);
   color: #0a0a0f;
 }
 
-.btn-primary:hover {
-  box-shadow: 0 0 30px rgba(0, 255, 136, 0.6), 0 0 60px rgba(0, 255, 136, 0.4);
-  transform: translateY(-3px) scale(1.02);
-  background: linear-gradient(135deg, #00ff88, #33ff99);
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--btn-angle, 0deg),
+    var(--accent-green),
+    var(--accent-blue),
+    var(--accent-green)
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: btn-border-rotate 4s linear infinite;
 }
 
+.btn-primary:hover::after {
+  opacity: 1;
+}
+
+.btn-primary:hover {
+  box-shadow:
+    0 0 30px rgba(0, 255, 136, 0.5),
+    0 0 60px rgba(0, 255, 136, 0.25),
+    0 0 100px rgba(0, 255, 136, 0.1);
+  transform: translateY(-3px) scale(1.03);
+  background: linear-gradient(135deg, #00ff88, #33ffaa);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Outline Button — Border draw on hover */
 .btn-outline {
-  border: 1px solid rgba(0, 255, 136, 0.4);
+  border: 1.5px solid rgba(0, 255, 136, 0.35);
   color: var(--accent-green);
-  background: rgba(0, 255, 136, 0.05);
+  background: rgba(0, 255, 136, 0.04);
+}
+
+.btn-outline::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--btn-angle, 0deg),
+    transparent 60%,
+    var(--accent-green) 80%,
+    transparent 100%
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: btn-border-rotate 3s linear infinite;
+}
+
+.btn-outline:hover::after {
+  opacity: 0.6;
 }
 
 .btn-outline:hover {
-  background: rgba(0, 255, 136, 0.25);
+  background: rgba(0, 255, 136, 0.12);
   border-color: var(--accent-green);
-  box-shadow: 0 0 25px rgba(0, 255, 136, 0.5), inset 0 0 15px rgba(0, 255, 136, 0.3);
-  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 0 20px rgba(0, 255, 136, 0.35),
+    inset 0 0 12px rgba(0, 255, 136, 0.15);
+  transform: translateY(-3px) scale(1.03);
   color: #fff;
-  text-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+}
+
+.btn-outline:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+@keyframes btn-border-rotate {
+  from { --btn-angle: 0deg; }
+  to { --btn-angle: 360deg; }
+}
+
+@property --btn-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
 
 /* ---- Badge ---- */
@@ -262,39 +369,104 @@ input, textarea {
   border: 1px solid rgba(168, 85, 247, 0.2);
 }
 
-/* ---- Scroll Animations ---- */
+/* ============================================
+   SCROLL ANIMATIONS — MULTI-DIRECTIONAL
+   ============================================ */
+
+/* Default: fade up */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) translateX(0) scale(1);
+  filter: blur(0);
 }
 
+/* Directional variants */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-blur {
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(10px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.reveal-left.visible,
+.reveal-right.visible,
+.reveal-scale.visible,
+.reveal-blur.visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+  filter: blur(0);
+}
+
+/* Staggered delays */
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 .reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+.reveal-delay-7 { transition-delay: 0.7s; }
+.reveal-delay-8 { transition-delay: 0.8s; }
 
-/* ---- Glow Line ---- */
+/* ---- Glow Line (Upgraded) ---- */
 .glow-line {
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent-green), var(--accent-blue), transparent);
   width: 80px;
   margin: 0 auto;
   margin-top: 16px;
   border-radius: 2px;
   animation: glow-line-pulse 3s ease-in-out infinite;
+  position: relative;
+}
+
+.glow-line::after {
+  content: '';
+  position: absolute;
+  inset: -4px 0;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.3), rgba(0, 212, 255, 0.3), transparent);
+  filter: blur(6px);
+  animation: glow-line-pulse 3s ease-in-out infinite;
 }
 
 @keyframes glow-line-pulse {
   0%, 100% { opacity: 0.6; width: 80px; }
-  50% { opacity: 1; width: 100px; }
+  50% { opacity: 1; width: 120px; }
 }
 
 /* ---- Flicker Animation (hacker style) ---- */
@@ -308,6 +480,29 @@ input, textarea {
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 136, 0.2); }
   50% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
+}
+
+/* ---- Float Animation ---- */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* ---- Shimmer Effect ---- */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ---- Spin Slow ---- */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* ---- Responsive ---- */

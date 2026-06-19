@@ -1,4 +1,4 @@
-/* ---- Projects ---- */
+/* ---- Projects (UPGRADED) ---- */
 .projects__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -9,32 +9,67 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   position: relative;
-  transition: all var(--transition-base);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+/* Cursor-following spotlight */
+.projects__card-spotlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    450px circle at var(--mouse-x) var(--mouse-y),
+    rgba(0, 255, 136, 0.06) 0%,
+    transparent 60%
+  );
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.projects__card:hover .projects__card-spotlight {
+  opacity: 1;
 }
 
 .projects__card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow-card);
+  transform: translateY(-8px);
+  border-color: rgba(0, 255, 136, 0.12);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 16px 48px rgba(0, 0, 0, 0.2);
 }
 
 .projects__card-glow {
   height: 3px;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .projects__card-glow--green {
   background: linear-gradient(90deg, var(--accent-green), rgba(0, 255, 136, 0.2));
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
 }
 
 .projects__card-glow--blue {
   background: linear-gradient(90deg, var(--accent-blue), rgba(0, 212, 255, 0.2));
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+}
+
+.projects__card:hover .projects__card-glow--green {
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+}
+
+.projects__card:hover .projects__card-glow--blue {
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
 }
 
 .projects__card-body {
   padding: 28px;
+  position: relative;
+  z-index: 1;
 }
 
 .projects__card-header {
@@ -51,6 +86,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.projects__card:hover .projects__card-icon {
+  transform: scale(1.1) rotate(-5deg);
 }
 
 .projects__card-icon--green {
@@ -77,13 +117,14 @@
   align-items: center;
   justify-content: center;
   color: var(--text-muted);
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .projects__link:hover {
   color: var(--accent-green);
   border-color: rgba(0, 255, 136, 0.3);
   background: rgba(0, 255, 136, 0.05);
+  transform: translateY(-2px);
 }
 
 .projects__link--live {
@@ -100,7 +141,23 @@
 
 .projects__link--live:hover {
   background: rgba(0, 255, 136, 0.12);
-  box-shadow: 0 0 15px rgba(0, 255, 136, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Pulsing live indicator dot */
+.projects__live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  animation: live-pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px var(--accent-green); }
+  50% { opacity: 0.5; transform: scale(0.8); box-shadow: 0 0 15px var(--accent-green); }
 }
 
 .projects__card-title {
@@ -109,6 +166,14 @@
   font-weight: 700;
   margin-bottom: 12px;
   color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.projects__card:hover .projects__card-title {
+  background: linear-gradient(135deg, var(--text-primary), var(--accent-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .projects__card-desc {
@@ -132,7 +197,7 @@
   font-size: 0.85rem;
   padding: 8px 12px;
   border-radius: var(--radius-sm);
-  transition: background var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .projects__feature--green {
@@ -140,6 +205,7 @@
 }
 .projects__feature--green:hover {
   background: var(--accent-green-dim);
+  transform: translateX(6px);
 }
 
 .projects__feature--blue {
@@ -147,6 +213,7 @@
 }
 .projects__feature--blue:hover {
   background: var(--accent-blue-dim);
+  transform: translateX(6px);
 }
 
 .projects__tags {

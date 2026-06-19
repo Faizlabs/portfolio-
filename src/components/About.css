@@ -1,4 +1,4 @@
-/* ---- About ---- */
+/* ---- About (UPGRADED) ---- */
 .about__grid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -10,6 +10,12 @@
 .about__terminal {
   overflow: hidden;
   border-radius: var(--radius-lg);
+  transition: all 0.4s ease;
+}
+
+.about__terminal:hover {
+  border-color: rgba(0, 255, 136, 0.1);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
 }
 
 .about__terminal-bar {
@@ -30,10 +36,15 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  transition: all 0.3s ease;
 }
 .about__dot--red { background: #ff5f57; }
 .about__dot--yellow { background: #febc2e; }
 .about__dot--green { background: #28c840; }
+
+.about__terminal:hover .about__dot--red { box-shadow: 0 0 6px #ff5f57; }
+.about__terminal:hover .about__dot--yellow { box-shadow: 0 0 6px #febc2e; }
+.about__terminal:hover .about__dot--green { box-shadow: 0 0 6px #28c840; }
 
 .about__terminal-title {
   font-family: var(--font-mono);
@@ -62,6 +73,23 @@
 
 .about__cmd {
   color: var(--accent-blue);
+  position: relative;
+}
+
+.about__cmd::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent-blue);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.about__terminal:hover .about__cmd::after {
+  opacity: 0.3;
 }
 
 .about__terminal-output {
@@ -93,6 +121,32 @@
   align-items: center;
   gap: 16px;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer on card hover */
+.about__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 60%,
+    transparent 100%
+  );
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.about__card:hover::before {
+  left: 100%;
 }
 
 .about__card-icon {
@@ -105,6 +159,12 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about__card:hover .about__card-icon {
+  transform: scale(1.1) rotate(-5deg);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
 }
 
 .about__card-content {

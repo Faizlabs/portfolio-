@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { ExternalLink, Shield, Monitor, Search, BarChart3, History, Sun, Lock, Activity, Layout, Smartphone } from 'lucide-react';
 import './Projects.css';
 
@@ -41,6 +42,21 @@ const projects = [
 ];
 
 export default function Projects() {
+  const handleMouseMove = useCallback((e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty('--mouse-x', `${x}%`);
+    card.style.setProperty('--mouse-y', `${y}%`);
+  }, []);
+
+  const handleMouseLeave = useCallback((e) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--mouse-x', '50%');
+    card.style.setProperty('--mouse-y', '50%');
+  }, []);
+
   return (
     <section className="section projects" id="projects">
       <div className="container">
@@ -55,7 +71,14 @@ export default function Projects() {
 
         <div className="projects__grid">
           {projects.map((project, i) => (
-            <div className={`projects__card glass reveal reveal-delay-${i + 1}`} key={project.title}>
+            <div
+              className={`projects__card glass reveal reveal-delay-${i + 1}`}
+              key={project.title}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            >
+              {/* Cursor-following spotlight */}
+              <div className="projects__card-spotlight" />
               <div className={`projects__card-glow projects__card-glow--${project.color}`} />
 
               <div className="projects__card-body">
@@ -68,6 +91,7 @@ export default function Projects() {
                       <GithubIcon />
                     </a>
                     <a href={project.live} className="projects__link projects__link--live" aria-label="Live Demo" target="_blank" rel="noopener noreferrer">
+                      <span className="projects__live-dot" />
                       <ExternalLink size={18} />
                       <span>Live</span>
                     </a>
