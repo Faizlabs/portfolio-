@@ -1,4 +1,4 @@
-import { GraduationCap, Swords, Code2, Award, Users } from 'lucide-react';
+import { GraduationCap, Swords, Code2, Award, Users, ExternalLink } from 'lucide-react';
 import './Experience.css';
 
 const experiences = [
@@ -41,9 +41,10 @@ const experiences = [
     period: 'Earned',
     icon: <Award size={14} />,
     points: [
-      'Cisco Networking Academy — Ethical Hacker',
-      'TryHackMe — Pre Security Learning Path',
-      'TryHackMe — Cybersecurity 101',
+      { text: 'Cisco Networking Academy — Ethical Hacker', link: '/certs/Ethical_Hacker_certificate_emptyempty387-gmail-com_551cf969-5934-4b01-b062-7db132a980fa.pdf' },
+      { text: 'Cisco Networking Academy — Introduction to Cybersecurity', link: '/certs/Introduction_to_Cybersecurity_certificate_emptyempty387-gmail-com_f3f2b63f-3559-4ca8-9bce-893a744584ba.pdf' },
+      { text: 'TryHackMe — Pre Security & Cybersecurity 101', link: '/certs/THM-QJJAKFH4Q9.pdf' },
+      { text: 'Faiz Farooqui Certificate', link: '/certs/Faiz_Farooqui_Certificate (1).pdf' },
     ],
   },
   {
@@ -93,7 +94,14 @@ export default function Experience() {
                   {exp.points.map((p, j) => (
                     <li className="experience__point" key={j}>
                       <span className="experience__point-marker" />
-                      {p}
+                      {typeof p === 'string' ? (
+                        p
+                      ) : (
+                        <a href={p.link} target="_blank" rel="noopener noreferrer" className="experience__cert-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--text-primary)', textDecoration: 'none' }}>
+                          <span style={{ textDecoration: 'underline' }}>{p.text}</span>
+                          <ExternalLink size={12} style={{ color: 'var(--accent-green)' }} />
+                        </a>
+                      )}
                     </li>
                   ))}
                 </ul>
