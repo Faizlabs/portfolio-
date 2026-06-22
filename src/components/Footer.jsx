@@ -32,7 +32,7 @@ export default function Footer() {
               <span className="footer__logo-text">~/faiz</span>
             </div>
             <p className="footer__tagline">
-              Building security tools. Hunting threats.
+              Building security tools & crafting web experiences.
             </p>
           </div>
 

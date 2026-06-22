@@ -4,7 +4,9 @@ import './Hero.css';
 
 const roles = [
   'SOC Analyst',
+  'Frontend Developer',
   'Threat Analyst',
+  'Web Developer',
   'OSINT Researcher',
   'Security Tool Builder',
 ];
@@ -83,8 +85,8 @@ export default function Hero() {
         </div>
 
         <p className="hero__desc hero__entrance hero__entrance--4">
-          BSc Computer Science student passionate about cybersecurity, threat hunting, and security engineering.
-          Building real-world security tools while developing skills in SOC operations, OSINT, and application security.
+          Computer Science graduate from University of Mumbai with a strong foundation in cybersecurity and modern web development.
+          Building secure, real-world applications — from threat analysis tools to creative web experiences — while actively sharpening skills through TryHackMe and hands-on projects.
         </p>
 
         <div className="hero__actions hero__entrance hero__entrance--5">
@@ -104,18 +106,18 @@ export default function Hero() {
 
         <div className="hero__stats hero__entrance hero__entrance--6">
           <div className="hero__stat">
-            <span className="hero__stat-value">2+</span>
-            <span className="hero__stat-label">Security Projects</span>
+            <span className="hero__stat-value">3+</span>
+            <span className="hero__stat-label">Projects Built</span>
           </div>
           <div className="hero__stat-divider" />
           <div className="hero__stat">
-            <span className="hero__stat-value">BSc</span>
-            <span className="hero__stat-label">Computer Science</span>
+            <span className="hero__stat-value">8.0</span>
+            <span className="hero__stat-label">CGPI</span>
           </div>
           <div className="hero__stat-divider" />
           <div className="hero__stat">
-            <span className="hero__stat-value">THM</span>
-            <span className="hero__stat-label">TryHackMe Learner</span>
+            <span className="hero__stat-value">3</span>
+            <span className="hero__stat-label">Certifications</span>
           </div>
         </div>
       </div>

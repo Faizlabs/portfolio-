@@ -1,4 +1,4 @@
-import { GraduationCap, Swords } from 'lucide-react';
+import { GraduationCap, Swords, Code2, Award, Users } from 'lucide-react';
 import './Experience.css';
 
 const experiences = [
@@ -10,18 +10,51 @@ const experiences = [
     points: [
       'Completing TryHackMe rooms covering SOC operations, threat analysis, and incident response',
       'Practicing OSINT techniques and phishing detection through hands-on challenges',
-      'Building security-focused web applications that apply real-world cybersecurity concepts',
+      'Exploring penetration testing methodologies and threat detection workflows',
+    ],
+  },
+  {
+    role: 'Web Development Projects',
+    org: 'Freelance & Personal',
+    period: 'Ongoing',
+    icon: <Code2 size={14} />,
+    points: [
+      'Designing and developing responsive web applications with React, Vite, and modern CSS',
+      'Created Faiztheticss — an artistic photography portfolio with immersive scroll-based storytelling',
+      'Building cybersecurity dashboards and tools with interactive data visualization',
     ],
   },
   {
     role: 'BSc Computer Science',
-    org: 'University — Student',
-    period: 'Present',
+    org: 'University of Mumbai — CGPI 8.00',
+    period: '2023 – 2026',
     icon: <GraduationCap size={14} />,
     points: [
-      'Focusing on cybersecurity, networking, and web development',
-      'Developing projects combining modern frontend skills with security principles',
-      'Studying vulnerability assessment, network security, and threat modeling',
+      'Studied cybersecurity, networking, and modern web development',
+      'Developed projects combining frontend engineering with security principles',
+      'Covered vulnerability assessment, network security, and full-stack fundamentals',
+    ],
+  },
+  {
+    role: 'Certifications',
+    org: 'Cisco & TryHackMe',
+    period: 'Earned',
+    icon: <Award size={14} />,
+    points: [
+      'Cisco Networking Academy — Ethical Hacker',
+      'TryHackMe — Pre Security Learning Path',
+      'TryHackMe — Cybersecurity 101',
+    ],
+  },
+  {
+    role: 'NSS Volunteer',
+    org: 'National Service Scheme',
+    period: 'Active',
+    icon: <Users size={14} />,
+    points: [
+      'Participated in community service and social awareness initiatives',
+      'Organized events and campaigns in collaboration with team members',
+      'Developed leadership, teamwork, and communication skills through volunteer work',
     ],
   },
 ];

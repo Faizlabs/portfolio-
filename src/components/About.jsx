@@ -2,9 +2,9 @@ import { GraduationCap, Target, Swords } from 'lucide-react';
 import './About.css';
 
 const highlights = [
-  { icon: <GraduationCap size={20} />, label: 'Education', value: 'BSc Computer Science — Completed' },
-  { icon: <Target size={20} />, label: 'Focus', value: 'SOC Analysis, OSINT & Web Security' },
-  { icon: <Swords size={20} />, label: 'Training', value: 'TryHackMe Rooms & Hands-on Labs' },
+  { icon: <GraduationCap size={20} />, label: 'Education', value: 'BSc Computer Science — CGPI 8.00' },
+  { icon: <Target size={20} />, label: 'Focus', value: 'Cybersecurity & Frontend Development' },
+  { icon: <Swords size={20} />, label: 'Certifications', value: 'Cisco Ethical Hacker, TryHackMe' },
 ];
 
 export default function About() {
@@ -34,15 +34,16 @@ export default function About() {
                 <span className="about__cmd">whoami</span>
               </div>
               <p className="about__terminal-output">
-                BSc Computer Science student passionate about cybersecurity, threat hunting, and security engineering.
-                Building real-world security tools while developing skills in SOC operations, OSINT, and application security.
+                Computer Science graduate with strong interest in cybersecurity, threat analysis, and SOC operations.
+                Skilled in networking, vulnerability assessment, OSINT, and modern web development.
+                Passionate about hands-on learning through TryHackMe, real-world projects, and sharing insights on LinkedIn.
               </p>
               <div className="about__terminal-line">
                 <span className="about__prompt">$</span>
                 <span className="about__cmd">echo $FOCUS</span>
               </div>
               <p className="about__terminal-output about__terminal-output--accent">
-                SOC Analysis • Threat Intelligence • OSINT • Web Security
+                SOC Analysis • Threat Intelligence • OSINT • React • Frontend Development
               </p>
               <div className="about__terminal-line">
                 <span className="about__prompt">$</span>

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { ExternalLink, Shield, Monitor, Search, BarChart3, History, Sun, Lock, Activity, Layout, Smartphone } from 'lucide-react';
+import { ExternalLink, Shield, Monitor, Search, BarChart3, History, Sun, Lock, Activity, Layout, Smartphone, Camera, Palette, Image, Aperture, Layers } from 'lucide-react';
 import './Projects.css';
 
 const GithubIcon = ({ size = 18 }) => (
@@ -12,7 +12,7 @@ const GithubIcon = ({ size = 18 }) => (
 const projects = [
   {
     title: 'Email & URL Threat Analyzer',
-    description: 'Detects phishing attempts, analyzes URL risk levels, and visualizes threat data through an interactive dashboard with scan history tracking.',
+    description: 'A cybersecurity-focused web app that analyzes suspicious emails and URLs for phishing indicators. Features threat scoring, risk assessment, and an interactive dashboard displaying scan results and threat insights.',
     features: [
       { icon: <Search size={14} />, label: 'Phishing Detection' },
       { icon: <Shield size={14} />, label: 'URL Risk Analysis' },
@@ -20,24 +20,42 @@ const projects = [
       { icon: <History size={14} />, label: 'Scan History' },
       { icon: <Sun size={14} />, label: 'Dark/Light Mode' },
     ],
-    tags: ['React', 'JavaScript', 'API Integration', 'Security'],
+    tags: ['HTML', 'CSS', 'JavaScript', 'Security'],
     color: 'green',
+    icon: <Lock size={22} />,
     github: 'https://github.com/Faizlabs',
     live: 'https://email-threat-analyser.netlify.app/',
   },
   {
-    title: 'CyberFlow Security Suite',
-    description: 'Modern cybersecurity dashboard for monitoring threats and managing security events with real-time data visualization and a responsive interface.',
+    title: 'CyberFlow Security Dashboard',
+    description: 'A modern SOC-inspired cybersecurity dashboard with responsive analytics panels for threat monitoring, alerts, and security visualization. Built with modular frontend architecture and real-time styled interactions.',
     features: [
       { icon: <Monitor size={14} />, label: 'Security Dashboard' },
       { icon: <Activity size={14} />, label: 'Threat Monitoring' },
       { icon: <Layout size={14} />, label: 'Modern Cybersecurity UI' },
       { icon: <Smartphone size={14} />, label: 'Responsive Design' },
     ],
-    tags: ['React', 'CSS', 'UI/UX', 'Dashboard'],
+    tags: ['Vite', 'TypeScript', 'Tailwind CSS', 'Dashboard'],
     color: 'blue',
+    icon: <Monitor size={22} />,
     github: 'https://github.com/Faizlabs',
     live: 'https://security-suite-nine.vercel.app/',
+  },
+  {
+    title: 'Faiztheticss — Photo Gallery',
+    description: 'An artistic photography portfolio organized by color, emotion, and light. Features curated collections — Amber, Rose, Azure, Noir & Prism — with immersive scroll-based storytelling.',
+    features: [
+      { icon: <Camera size={14} />, label: 'Curated Photo Collections' },
+      { icon: <Palette size={14} />, label: 'Color-Organized Galleries' },
+      { icon: <Layers size={14} />, label: 'Scroll-Based Storytelling' },
+      { icon: <Aperture size={14} />, label: 'Cinematic Layouts' },
+      { icon: <Image size={14} />, label: 'Responsive Masonry Grid' },
+    ],
+    tags: ['Photography', 'HTML/CSS', 'JavaScript', 'Visual Art'],
+    color: 'purple',
+    icon: <Camera size={22} />,
+    github: 'https://github.com/Faizlabs',
+    live: 'https://faiztheticss.vercel.app/',
   },
 ];
 
@@ -64,7 +82,7 @@ export default function Projects() {
           <p className="section-label">Projects</p>
           <h2 className="section-title">Featured Work</h2>
           <p className="section-subtitle">
-            Security tools built to solve real-world problems.
+            Security tools & creative projects built to solve real-world problems.
           </p>
           <div className="glow-line" />
         </div>
@@ -84,7 +102,7 @@ export default function Projects() {
               <div className="projects__card-body">
                 <div className="projects__card-header">
                   <div className={`projects__card-icon projects__card-icon--${project.color}`}>
-                    <Lock size={22} />
+                    {project.icon}
                   </div>
                   <div className="projects__card-links">
                     <a href={project.github} className="projects__link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">

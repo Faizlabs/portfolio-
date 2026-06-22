@@ -5,6 +5,10 @@
   gap: 28px;
 }
 
+.projects__grid > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .projects__card {
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -66,6 +70,15 @@
   box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
 }
 
+.projects__card-glow--purple {
+  background: linear-gradient(90deg, var(--accent-purple), rgba(168, 85, 247, 0.2));
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+}
+
+.projects__card:hover .projects__card-glow--purple {
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+}
+
 .projects__card-body {
   padding: 28px;
   position: relative;
@@ -101,6 +114,11 @@
 .projects__card-icon--blue {
   background: var(--accent-blue-dim);
   color: var(--accent-blue);
+}
+
+.projects__card-icon--purple {
+  background: var(--accent-purple-dim);
+  color: var(--accent-purple);
 }
 
 .projects__card-links {
@@ -213,6 +231,14 @@
 }
 .projects__feature--blue:hover {
   background: var(--accent-blue-dim);
+  transform: translateX(6px);
+}
+
+.projects__feature--purple {
+  color: rgba(168, 85, 247, 0.8);
+}
+.projects__feature--purple:hover {
+  background: var(--accent-purple-dim);
   transform: translateX(6px);
 }
 

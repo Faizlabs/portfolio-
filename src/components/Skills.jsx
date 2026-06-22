@@ -1,7 +1,8 @@
 import {
   ShieldAlert, Search, Eye, Radio, Wifi, Bug,
   MonitorCog, MapPin, Flame, Terminal, GitBranch,
-  Code2, Palette, FileCode, Hexagon, Cloud, Rocket
+  Code2, Palette, FileCode, Hexagon, Cloud, Rocket,
+  Braces, PenTool, Globe, Server, Cpu, Database, Layers
 } from 'lucide-react';
 import './Skills.css';
 
@@ -16,6 +17,25 @@ const categories = [
       { name: 'SOC Fundamentals', icon: <Radio size={20} /> },
       { name: 'Network Security', icon: <Wifi size={20} /> },
       { name: 'Vulnerability Assessment', icon: <Bug size={20} /> },
+      { name: 'OWASP', icon: <Globe size={20} /> },
+      { name: 'SIEM / Splunk', icon: <Database size={20} /> },
+      { name: 'Kali Linux', icon: <Terminal size={20} /> },
+      { name: 'Threat Intelligence', icon: <Cpu size={20} /> },
+    ],
+  },
+  {
+    title: 'Development',
+    color: 'purple',
+    skills: [
+      { name: 'HTML', icon: <Code2 size={20} /> },
+      { name: 'CSS', icon: <Palette size={20} /> },
+      { name: 'JavaScript', icon: <FileCode size={20} /> },
+      { name: 'TypeScript', icon: <Braces size={20} /> },
+      { name: 'Python', icon: <PenTool size={20} /> },
+      { name: 'React', icon: <Hexagon size={20} /> },
+      { name: 'Tailwind CSS', icon: <Layers size={20} /> },
+      { name: 'Vite', icon: <Rocket size={20} /> },
+      { name: 'APIs', icon: <Server size={20} /> },
     ],
   },
   {
@@ -27,17 +47,7 @@ const categories = [
       { name: 'Burp Suite', icon: <Flame size={20} /> },
       { name: 'Linux', icon: <Terminal size={20} /> },
       { name: 'Git & GitHub', icon: <GitBranch size={20} /> },
-    ],
-  },
-  {
-    title: 'Development',
-    color: 'purple',
-    skills: [
-      { name: 'HTML', icon: <Code2 size={20} /> },
-      { name: 'CSS', icon: <Palette size={20} /> },
-      { name: 'JavaScript', icon: <FileCode size={20} /> },
-      { name: 'React', icon: <Hexagon size={20} /> },
-      { name: 'Tailwind CSS', icon: <Palette size={20} /> },
+      { name: 'VS Code', icon: <Code2 size={20} /> },
       { name: 'Vercel', icon: <Cloud size={20} /> },
       { name: 'Netlify', icon: <Rocket size={20} /> },
     ],
@@ -52,7 +62,7 @@ export default function Skills() {
           <p className="section-label">Skills</p>
           <h2 className="section-title">My Arsenal</h2>
           <p className="section-subtitle">
-            Tools and technologies in my security toolkit.
+            Tools and technologies in my security & development toolkit.
           </p>
           <div className="glow-line" />
         </div>

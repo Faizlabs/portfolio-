@@ -140,7 +140,7 @@ export default function Contact() {
             <div className="contact__cta glass">
               <p className="contact__cta-text">
                 <span className="contact__cta-accent">&gt;_</span> Open to internships,
-                collaborations, and cybersecurity projects. Let's build something secure.
+                collaborations, and projects in cybersecurity & web development. Let's build something amazing.
               </p>
             </div>
           </div>
