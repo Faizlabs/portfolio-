@@ -114,11 +114,6 @@ export default function Hero() {
             <span className="hero__stat-value">8.0</span>
             <span className="hero__stat-label">CGPI</span>
           </div>
-          <div className="hero__stat-divider" />
-          <div className="hero__stat">
-            <span className="hero__stat-value">4</span>
-            <span className="hero__stat-label">Certifications</span>
-          </div>
         </div>
       </div>
 
