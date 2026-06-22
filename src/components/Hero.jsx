@@ -116,7 +116,7 @@ export default function Hero() {
           </div>
           <div className="hero__stat-divider" />
           <div className="hero__stat">
-            <span className="hero__stat-value">3</span>
+            <span className="hero__stat-value">4</span>
             <span className="hero__stat-label">Certifications</span>
           </div>
         </div>
