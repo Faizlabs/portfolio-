@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { ChevronDown, ExternalLink, Terminal, FileText, ArrowRight } from 'lucide-react';
+import { ChevronDown, ExternalLink, Terminal, ArrowRight } from 'lucide-react';
 import './Hero.css';
 
 const roles = [
@@ -95,10 +95,6 @@ export default function Hero() {
             View My Work
             <ArrowRight size={16} className="hero__btn-arrow" />
           </button>
-          <a href="/resume%20main.pdf?v=2" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-            <FileText size={18} />
-            Resume
-          </a>
           <button className="btn btn-outline" onClick={() => scrollTo('contact')}>
             Get In Touch
           </button>
