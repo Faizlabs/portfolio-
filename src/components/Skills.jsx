@@ -1,55 +1,74 @@
 import {
-  ShieldAlert, Search, Eye, Radio, Wifi, Bug,
-  MonitorCog, MapPin, Flame, Terminal, GitBranch,
-  Code2, Palette, FileCode, Hexagon, Cloud, Rocket,
-  Braces, PenTool, Globe, Server, Cpu, Database, Layers
+  ShieldAlert, Search, Eye, Radio, Wifi, Bug, Globe, Database, Terminal, Cpu,
+  Code2, Palette, FileCode, Braces, PenTool, Hexagon, Layers, Rocket, Server,
+  MonitorCog, MapPin, Flame, GitBranch, Cloud, Lightbulb, MessageSquare,
+  Users2, RefreshCw, BrainCircuit, CheckSquare
 } from 'lucide-react';
 import './Skills.css';
 
-const categories = [
+const skillCategories = [
   {
-    title: 'Cybersecurity',
-    color: 'green',
-    skills: [
-      { name: 'Threat Analysis', icon: <ShieldAlert size={20} /> },
-      { name: 'Phishing Detection', icon: <Search size={20} /> },
-      { name: 'OSINT', icon: <Eye size={20} /> },
-      { name: 'SOC Fundamentals', icon: <Radio size={20} /> },
-      { name: 'Network Security', icon: <Wifi size={20} /> },
-      { name: 'Vulnerability Assessment', icon: <Bug size={20} /> },
-      { name: 'OWASP', icon: <Globe size={20} /> },
-      { name: 'SIEM / Splunk', icon: <Database size={20} /> },
-      { name: 'Kali Linux', icon: <Terminal size={20} /> },
-      { name: 'Threat Intelligence', icon: <Cpu size={20} /> },
-    ],
-  },
-  {
-    title: 'Development',
+    id: 'cybersecurity',
+    title: 'Cybersecurity & Defense',
+    subtitle: 'Threat analysis, vulnerability assessment & SOC tooling',
     color: 'purple',
     skills: [
-      { name: 'HTML', icon: <Code2 size={20} /> },
-      { name: 'CSS', icon: <Palette size={20} /> },
-      { name: 'JavaScript', icon: <FileCode size={20} /> },
-      { name: 'TypeScript', icon: <Braces size={20} /> },
-      { name: 'Python', icon: <PenTool size={20} /> },
-      { name: 'React', icon: <Hexagon size={20} /> },
-      { name: 'Tailwind CSS', icon: <Layers size={20} /> },
-      { name: 'Vite', icon: <Rocket size={20} /> },
-      { name: 'APIs', icon: <Server size={20} /> },
+      { name: 'Threat Intelligence', icon: <Cpu size={18} /> },
+      { name: 'OSINT', icon: <Eye size={18} /> },
+      { name: 'Phishing Detection', icon: <Search size={18} /> },
+      { name: 'SOC Fundamentals', icon: <Radio size={18} /> },
+      { name: 'Vulnerability Assessment', icon: <Bug size={18} /> },
+      { name: 'OWASP Top 10', icon: <Globe size={18} /> },
+      { name: 'SIEM & Splunk', icon: <Database size={18} /> },
+      { name: 'Kali Linux', icon: <Terminal size={18} /> },
+      { name: 'Networking & Protocols', icon: <Wifi size={18} /> },
+      { name: 'Incident Analysis', icon: <ShieldAlert size={18} /> },
     ],
   },
   {
-    title: 'Tools',
-    color: 'blue',
+    id: 'programming',
+    title: 'Programming & Web Development',
+    subtitle: 'Scalable frontend engineering & core languages',
+    color: 'violet',
     skills: [
-      { name: 'Wireshark', icon: <MonitorCog size={20} /> },
-      { name: 'Nmap', icon: <MapPin size={20} /> },
-      { name: 'Burp Suite', icon: <Flame size={20} /> },
-      { name: 'Linux', icon: <Terminal size={20} /> },
-      { name: 'Git & GitHub', icon: <GitBranch size={20} /> },
-      { name: 'VS Code', icon: <Code2 size={20} /> },
-      { name: 'Vercel', icon: <Cloud size={20} /> },
-      { name: 'Netlify', icon: <Rocket size={20} /> },
+      { name: 'React', icon: <Hexagon size={18} /> },
+      { name: 'TypeScript', icon: <Braces size={18} /> },
+      { name: 'JavaScript (ES6+)', icon: <FileCode size={18} /> },
+      { name: 'HTML5 Semantic Web', icon: <Code2 size={18} /> },
+      { name: 'CSS3 / Modern Styling', icon: <Palette size={18} /> },
+      { name: 'Python', icon: <PenTool size={18} /> },
+      { name: 'REST APIs', icon: <Server size={18} /> },
+      { name: 'Responsive Layouts', icon: <Layers size={18} /> },
+    ],
+  },
+  {
+    id: 'tools',
+    title: 'Frameworks, Tools & Tooling',
+    subtitle: 'Security auditing, build tools & cloud deployment',
+    color: 'cyan',
+    skills: [
+      { name: 'Tailwind CSS', icon: <Layers size={18} /> },
+      { name: 'Vite', icon: <Rocket size={18} /> },
+      { name: 'Wireshark', icon: <MonitorCog size={18} /> },
+      { name: 'Nmap', icon: <MapPin size={18} /> },
+      { name: 'Burp Suite', icon: <Flame size={18} /> },
+      { name: 'Git & GitHub', icon: <GitBranch size={18} /> },
+      { name: 'VS Code', icon: <Code2 size={18} /> },
+      { name: 'Vercel / Netlify', icon: <Cloud size={18} /> },
+    ],
+  },
+  {
+    id: 'core',
+    title: 'Core Concepts & Engineering Soft Skills',
+    subtitle: 'Problem solving, teamwork & security methodologies',
+    color: 'magenta',
+    skills: [
+      { name: 'Problem Solving', icon: <Lightbulb size={18} /> },
+      { name: 'Analytical Thinking', icon: <BrainCircuit size={18} /> },
+      { name: 'Teamwork & Collaboration', icon: <Users2 size={18} /> },
+      { name: 'Communication', icon: <MessageSquare size={18} /> },
+      { name: 'Adaptability', icon: <RefreshCw size={18} /> },
+      { name: 'Security Monitoring', icon: <CheckSquare size={18} /> },
     ],
   },
 ];
@@ -59,22 +78,28 @@ export default function Skills() {
     <section className="section skills" id="skills">
       <div className="container">
         <div className="section-header reveal">
-          <p className="section-label">Skills</p>
-          <h2 className="section-title">My Arsenal</h2>
+          <p className="section-label">Technical Competencies</p>
+          <h2 className="section-title">My Skills & Arsenal</h2>
           <p className="section-subtitle">
-            Tools and technologies in my security & development toolkit.
+            Curated toolkit spanning cybersecurity analysis, secure software engineering, and modern web technologies.
           </p>
           <div className="glow-line" />
         </div>
 
+        {/* All Domains Categories Grid directly rendered without filter buttons */}
         <div className="skills__grid">
-          {categories.map((cat, ci) => (
-            <div className={`skills__category glass reveal reveal-delay-${ci + 1}`} key={cat.title}>
+          {skillCategories.map((cat, ci) => (
+            <div 
+              className={`skills__category glass reveal reveal-delay-${ci + 1}`} 
+              key={cat.id}
+            >
               <div className="skills__category-header">
-                <div className={`skills__category-dot skills__category-dot--${cat.color}`} />
-                <h3 className="skills__category-title">{cat.title}</h3>
-                <span className={`badge badge-${cat.color}`}>{cat.skills.length}</span>
+                <div>
+                  <h3 className="skills__category-title">{cat.title}</h3>
+                  <p className="skills__category-subtitle">{cat.subtitle}</p>
+                </div>
               </div>
+
               <div className="skills__list">
                 {cat.skills.map((skill) => (
                   <div className={`skills__item skills__item--${cat.color}`} key={skill.name}>

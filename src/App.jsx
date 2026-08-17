@@ -61,7 +61,6 @@ export default function App() {
 
   return (
     <div className="app">
-      <div className="scanline" />
       <CustomCursor />
       <ParticleBackground />
       <Navbar />

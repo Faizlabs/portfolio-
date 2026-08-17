@@ -1,5 +1,9 @@
 import { useCallback } from 'react';
-import { ExternalLink, Shield, Monitor, Search, BarChart3, History, Sun, Lock, Activity, Layout, Smartphone, Camera, Palette, Image, Aperture, Layers } from 'lucide-react';
+import { 
+  Shield, Monitor, Search, BarChart3, History, 
+  Sun, Lock, Activity, Layout, Smartphone, Camera, 
+  Image, Aperture, Layers, ArrowUpRight 
+} from 'lucide-react';
 import './Projects.css';
 
 const GithubIcon = ({ size = 18 }) => (
@@ -12,48 +16,53 @@ const GithubIcon = ({ size = 18 }) => (
 const projects = [
   {
     title: 'Email & URL Threat Analyzer',
-    description: 'A cybersecurity-focused web app that analyzes suspicious emails and URLs for phishing indicators. Features threat scoring, risk assessment, and an interactive dashboard displaying scan results and threat insights.',
+    subtitle: 'Cybersecurity Phishing & Heuristic Risk Analysis',
+    badge: 'Security Tool',
+    description: 'A cybersecurity-focused web application designed to analyze suspicious emails and URLs for phishing indicators, threat scoring, risk assessment, and simulated real-world SOC investigation workflows.',
     features: [
-      { icon: <Search size={14} />, label: 'Phishing Detection' },
-      { icon: <Shield size={14} />, label: 'URL Risk Analysis' },
-      { icon: <BarChart3 size={14} />, label: 'Threat Intelligence Dashboard' },
-      { icon: <History size={14} />, label: 'Scan History' },
-      { icon: <Sun size={14} />, label: 'Dark/Light Mode' },
+      { icon: <Search size={14} />, label: 'Phishing Detection Logic' },
+      { icon: <Shield size={14} />, label: 'URL Risk Scoring' },
+      { icon: <BarChart3 size={14} />, label: 'Interactive Scan Dashboard' },
+      { icon: <History size={14} />, label: 'Investigation History' },
+      { icon: <Sun size={14} />, label: 'Dark / Light Mode' },
     ],
-    tags: ['HTML', 'CSS', 'JavaScript', 'Security'],
-    color: 'green',
-    icon: <Lock size={22} />,
+    tags: ['HTML5', 'CSS3', 'JavaScript', 'Phishing Analysis', 'SOC Workflows'],
+    color: 'purple',
+    icon: <Lock size={24} />,
     github: 'https://github.com/Faizlabs',
     live: 'https://email-threat-analyser.netlify.app/',
   },
   {
     title: 'CyberFlow Security Dashboard',
-    description: 'A modern SOC-inspired cybersecurity dashboard with responsive analytics panels for threat monitoring, alerts, and security visualization. Built with modular frontend architecture and real-time styled interactions.',
+    subtitle: 'SOC Analytics & Real-Time Monitoring Interface',
+    badge: 'Dashboard / Suite',
+    description: 'A modern cybersecurity dashboard inspired by Security Operations Center (SOC) environments. Developed responsive analytics panels for threat monitoring, alerts, and live-styled security visualization.',
     features: [
-      { icon: <Monitor size={14} />, label: 'Security Dashboard' },
-      { icon: <Activity size={14} />, label: 'Threat Monitoring' },
-      { icon: <Layout size={14} />, label: 'Modern Cybersecurity UI' },
-      { icon: <Smartphone size={14} />, label: 'Responsive Design' },
+      { icon: <Monitor size={14} />, label: 'SOC Monitoring Panels' },
+      { icon: <Activity size={14} />, label: 'Real-Time Threat Alerts' },
+      { icon: <Layout size={14} />, label: 'Modular TypeScript Architecture' },
+      { icon: <Smartphone size={14} />, label: 'Fully Responsive UI' },
     ],
-    tags: ['Vite', 'TypeScript', 'Tailwind CSS', 'Dashboard'],
-    color: 'blue',
-    icon: <Monitor size={22} />,
+    tags: ['Vite', 'TypeScript', 'Tailwind CSS', 'React / UI', 'Security Analytics'],
+    color: 'violet',
+    icon: <Monitor size={24} />,
     github: 'https://github.com/Faizlabs',
     live: 'https://security-suite-nine.vercel.app/',
   },
   {
-    title: 'Faiztheticss — Photo Gallery',
-    description: 'An artistic photography portfolio organized by color, emotion, and light. Features curated collections — Amber, Rose, Azure, Noir & Prism — with immersive scroll-based storytelling.',
+    title: 'Faiztheticss — Photography Portfolio',
+    subtitle: 'Artistic Visual Gallery & Scroll Storytelling',
+    badge: 'Creative Frontend',
+    description: 'An artistic photography gallery organized by color collections (Amber, Rose, Azure, Noir, Prism) with immersive scroll-based storytelling, cinematic layouts, and responsive masonry grids.',
     features: [
-      { icon: <Camera size={14} />, label: 'Curated Photo Collections' },
-      { icon: <Palette size={14} />, label: 'Color-Organized Galleries' },
+      { icon: <Camera size={14} />, label: 'Color Collections (Amber, Rose, etc.)' },
       { icon: <Layers size={14} />, label: 'Scroll-Based Storytelling' },
-      { icon: <Aperture size={14} />, label: 'Cinematic Layouts' },
+      { icon: <Aperture size={14} />, label: 'Cinematic Visual Layouts' },
       { icon: <Image size={14} />, label: 'Responsive Masonry Grid' },
     ],
-    tags: ['Photography', 'HTML/CSS', 'JavaScript', 'Visual Art'],
-    color: 'purple',
-    icon: <Camera size={22} />,
+    tags: ['HTML5', 'CSS3', 'JavaScript', 'Visual Storytelling', 'Masonry Grid'],
+    color: 'cyan',
+    icon: <Camera size={24} />,
     github: 'https://github.com/Faizlabs',
     live: 'https://faiztheticss.vercel.app/',
   },
@@ -79,10 +88,10 @@ export default function Projects() {
     <section className="section projects" id="projects">
       <div className="container">
         <div className="section-header reveal">
-          <p className="section-label">Projects</p>
-          <h2 className="section-title">Featured Work</h2>
+          <p className="section-label">Featured Projects</p>
+          <h2 className="section-title">Built for Impact</h2>
           <p className="section-subtitle">
-            Security tools & creative projects built to solve real-world problems.
+            A selection of cybersecurity tools, security monitoring dashboards, and creative frontend experiences.
           </p>
           <div className="glow-line" />
         </div>
@@ -95,30 +104,50 @@ export default function Projects() {
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
             >
-              {/* Cursor-following spotlight */}
+              {/* Cursor-following radial spotlight */}
               <div className="projects__card-spotlight" />
               <div className={`projects__card-glow projects__card-glow--${project.color}`} />
 
               <div className="projects__card-body">
-                <div className="projects__card-header">
-                  <div className={`projects__card-icon projects__card-icon--${project.color}`}>
-                    {project.icon}
+                {/* Header with Icon, Badge & Links */}
+                <div className="projects__card-top">
+                  <div className="projects__card-identity">
+                    <div className={`projects__card-icon projects__card-icon--${project.color}`}>
+                      {project.icon}
+                    </div>
+                    <div>
+                      <span className="projects__badge">{project.badge}</span>
+                      <h3 className="projects__card-title">{project.title}</h3>
+                    </div>
                   </div>
+
                   <div className="projects__card-links">
-                    <a href={project.github} className="projects__link" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+                    <a 
+                      href={project.github} 
+                      className="projects__link" 
+                      aria-label={`GitHub repo for ${project.title}`}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
                       <GithubIcon />
                     </a>
-                    <a href={project.live} className="projects__link projects__link--live" aria-label="Live Demo" target="_blank" rel="noopener noreferrer">
+                    <a 
+                      href={project.live} 
+                      className="projects__link projects__link--live" 
+                      aria-label={`Live Demo for ${project.title}`}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
                       <span className="projects__live-dot" />
-                      <ExternalLink size={18} />
-                      <span>Live</span>
+                      <span>Live App</span>
+                      <ArrowUpRight size={15} />
                     </a>
                   </div>
                 </div>
 
-                <h3 className="projects__card-title">{project.title}</h3>
                 <p className="projects__card-desc">{project.description}</p>
 
+                {/* Feature Chips */}
                 <div className="projects__features">
                   {project.features.map((f) => (
                     <div className={`projects__feature projects__feature--${project.color}`} key={f.label}>
@@ -128,9 +157,12 @@ export default function Projects() {
                   ))}
                 </div>
 
+                {/* Tags */}
                 <div className="projects__tags">
                   {project.tags.map((tag) => (
-                    <span className={`badge badge-${project.color}`} key={tag}>{tag}</span>
+                    <span className={`badge badge-${project.color}`} key={tag}>
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </div>

@@ -1,4 +1,4 @@
-/* ---- Custom Cursor ---- */
+/* ---- Custom Cursor (Luxury Violet Theme) ---- */
 .custom-cursor {
   pointer-events: none;
   position: fixed;
@@ -13,11 +13,11 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--accent-green);
+  background: var(--accent-lavender);
   box-shadow:
-    0 0 10px var(--accent-green),
-    0 0 20px rgba(0, 255, 136, 0.4),
-    0 0 40px rgba(0, 255, 136, 0.15);
+    0 0 12px var(--accent-purple),
+    0 0 24px rgba(168, 85, 247, 0.6),
+    0 0 45px rgba(139, 92, 246, 0.3);
   transform: translate(-50%, -50%);
   transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1),
               height 0.3s cubic-bezier(0.25, 1, 0.5, 1),
@@ -29,10 +29,10 @@
 
 .cursor__ring {
   position: fixed;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 1.5px solid rgba(0, 255, 136, 0.5);
+  border: 1.5px solid rgba(168, 85, 247, 0.55);
   transform: translate(-50%, -50%);
   transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1),
               height 0.4s cubic-bezier(0.25, 1, 0.5, 1),
@@ -41,7 +41,7 @@
               opacity 0.3s ease;
   pointer-events: none;
   z-index: 100000;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 
 /* Cursor trail particles */
@@ -50,7 +50,7 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(0, 255, 136, 0.6);
+  background: rgba(192, 132, 252, 0.7);
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 99999;
@@ -62,19 +62,20 @@
 .cursor--hover .cursor__dot {
   width: 14px;
   height: 14px;
-  background: rgba(0, 255, 136, 0.9);
+  background: rgba(238, 230, 255, 0.95);
   box-shadow:
-    0 0 15px var(--accent-green),
-    0 0 30px rgba(0, 255, 136, 0.5),
-    0 0 60px rgba(0, 255, 136, 0.2);
+    0 0 18px var(--accent-purple),
+    0 0 35px rgba(168, 85, 247, 0.7),
+    0 0 70px rgba(139, 92, 246, 0.4);
 }
 
 .cursor--hover .cursor__ring {
-  width: 52px;
-  height: 52px;
-  border-color: rgba(0, 255, 136, 0.8);
+  width: 56px;
+  height: 56px;
+  border-color: rgba(192, 132, 252, 0.85);
   opacity: 1;
-  background: rgba(0, 255, 136, 0.04);
+  background: rgba(168, 85, 247, 0.08);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
 }
 
 /* Click state */
@@ -86,7 +87,8 @@
 .cursor--click .cursor__ring {
   width: 28px;
   height: 28px;
-  border-color: rgba(0, 255, 136, 1);
+  border-color: rgba(217, 70, 239, 1);
+  background: rgba(217, 70, 239, 0.2);
 }
 
 /* Text hover state */
@@ -94,7 +96,7 @@
   width: 3px;
   height: 24px;
   border-radius: 2px;
-  background: var(--accent-green);
+  background: var(--accent-lavender);
 }
 
 .cursor--text .cursor__ring {
