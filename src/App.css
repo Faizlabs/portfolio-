@@ -11,16 +11,16 @@
   z-index: 1;
 }
 
-/* Subtle film grain noise overlay */
+/* Subtle film grain noise overlay — GPU friendly */
 .app::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 2;
-  opacity: 0.6;
-  mix-blend-mode: overlay;
+  opacity: 0.35;
+  transform: translateZ(0);
 }
 
 /* Luxury atmospheric vignette */
@@ -28,9 +28,10 @@
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(5, 4, 10, 0.7) 100%);
+  background: radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(5, 5, 5, 0.7) 100%);
   pointer-events: none;
   z-index: 0;
+  transform: translateZ(0);
 }
 
 /* Section Separators with animated gradient */
@@ -41,11 +42,17 @@
   height: 1px;
   max-width: 350px;
   margin: 0 auto;
-  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), rgba(56, 189, 248, 0.2), rgba(217, 70, 239, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), rgba(200, 200, 200, 0.08), rgba(255, 255, 255, 0.12), transparent);
   animation: separator-pulse 4s ease-in-out infinite;
 }
 
 @keyframes separator-pulse {
-  0%, 100% { opacity: 0.5; max-width: 250px; }
-  50% { opacity: 1; max-width: 400px; }
+  0%, 100% { opacity: 0.4; max-width: 250px; }
+  50% { opacity: 0.9; max-width: 380px; }
+}
+
+@media (max-width: 768px) {
+  .app::before {
+    display: none; /* Disable full-screen SVG filter layer on mobile for max FPS */
+  }
 }

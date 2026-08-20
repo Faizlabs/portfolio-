@@ -30,21 +30,15 @@ export default function App() {
       });
     }, 100);
 
-    // Lightweight parallax on scroll
+    // Highly optimized scroll handler without DOM layout thrashing
     let ticking = false;
+    const isMobile = window.innerWidth <= 768;
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          const scrollY = window.scrollY;
-          document.documentElement.style.setProperty('--scroll-y', `${scrollY}px`);
-
-          // Apply subtle parallax to section backgrounds
-          document.querySelectorAll('.section').forEach((section) => {
-            const rect = section.getBoundingClientRect();
-            const offset = rect.top * 0.03;
-            section.style.setProperty('--parallax-offset', `${offset}px`);
-          });
-
+          if (!isMobile) {
+            document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
+          }
           ticking = false;
         });
         ticking = true;

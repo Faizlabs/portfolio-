@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import './CustomCursor.css';
 
-const TRAIL_COUNT = 6;
-const TRAIL_DECAY = 0.92;
+const TRAIL_COUNT = 4;
+const TRAIL_DECAY = 0.88;
 
 export default function CustomCursor() {
+  const cursorWrapperRef = useRef(null);
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const trailRefs = useRef([]);
@@ -12,126 +13,116 @@ export default function CustomCursor() {
   const ringPos = useRef({ x: -100, y: -100 });
   const trailPositions = useRef(Array.from({ length: TRAIL_COUNT }, () => ({ x: -100, y: -100 })));
   const rafRef = useRef(null);
-  const [cursorState, setCursorState] = useState('');
-
-  const isInteractive = useCallback((el) => {
-    if (!el) return false;
-    const tag = el.tagName?.toLowerCase();
-    if (['a', 'button', 'select', 'label'].includes(tag)) return true;
-    if (el.getAttribute('role') === 'button') return true;
-    if (el.closest('a, button, [role="button"]')) return true;
-    if (el.classList?.contains('glass-hover')) return true;
-    if (el.classList?.contains('btn')) return true;
-    if (el.classList?.contains('projects__card')) return true;
-    if (el.classList?.contains('skills__item')) return true;
-    if (el.classList?.contains('navbar__link')) return true;
-    if (el.classList?.contains('footer__social')) return true;
-    return false;
-  }, []);
-
-  const isTextInput = useCallback((el) => {
-    if (!el) return false;
-    const tag = el.tagName?.toLowerCase();
-    return tag === 'input' || tag === 'textarea';
-  }, []);
+  const lastState = useRef('');
 
   useEffect(() => {
-    // Hide default cursor
-    document.body.style.cursor = 'none';
-    document.querySelectorAll('a, button, input, textarea, select, [role="button"]').forEach(el => {
-      el.style.cursor = 'none';
-    });
+    // Only run on devices with fine pointer (mouse)
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+      return;
+    }
+
+    const wrapper = cursorWrapperRef.current;
+    if (!wrapper) return;
+
+    let moveThrottle = false;
 
     const handleMouseMove = (e) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
+      mousePos.current.x = e.clientX;
+      mousePos.current.y = e.clientY;
 
-      const target = e.target;
-      if (isTextInput(target)) {
-        setCursorState('cursor--text');
-      } else if (isInteractive(target)) {
-        setCursorState('cursor--hover');
-      } else {
-        setCursorState('');
+      if (!moveThrottle) {
+        moveThrottle = true;
+        requestAnimationFrame(() => {
+          const target = document.elementFromPoint(mousePos.current.x, mousePos.current.y);
+          if (target) {
+            let newState = '';
+            const tag = target.tagName?.toLowerCase();
+            if (tag === 'input' || tag === 'textarea') {
+              newState = 'cursor--text';
+            } else if (
+              ['a', 'button', 'select', 'label'].includes(tag) ||
+              target.getAttribute('role') === 'button' ||
+              target.closest('a, button, [role="button"], .glass-hover, .btn, .projects__card, .skills__item, .navbar__link, .footer__social')
+            ) {
+              newState = 'cursor--hover';
+            }
+
+            if (newState !== lastState.current) {
+              lastState.current = newState;
+              wrapper.className = `custom-cursor ${newState}`;
+            }
+          }
+          moveThrottle = false;
+        });
       }
     };
 
     const handleMouseDown = () => {
-      setCursorState(prev => prev + ' cursor--click');
+      if (wrapper) {
+        wrapper.classList.add('cursor--click');
+      }
     };
 
     const handleMouseUp = () => {
-      setCursorState(prev => prev.replace(' cursor--click', ''));
+      if (wrapper) {
+        wrapper.classList.remove('cursor--click');
+      }
     };
 
     const handleMouseLeave = () => {
       mousePos.current = { x: -100, y: -100 };
     };
 
-    // Animation loop for smooth trailing
+    // Hardware-accelerated GPU animation loop using translate3d
     const animate = () => {
-      // Dot follows instantly
+      // Dot follows instantly with translate3d
       if (dotRef.current) {
-        dotRef.current.style.left = `${mousePos.current.x}px`;
-        dotRef.current.style.top = `${mousePos.current.y}px`;
+        dotRef.current.style.transform = `translate3d(${mousePos.current.x}px, ${mousePos.current.y}px, 0) translate(-50%, -50%)`;
       }
 
       // Ring follows with smooth lerp
-      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.15;
-      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.15;
+      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.18;
+      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.18;
       if (ringRef.current) {
-        ringRef.current.style.left = `${ringPos.current.x}px`;
-        ringRef.current.style.top = `${ringPos.current.y}px`;
+        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%)`;
       }
 
-      // Trail particles with staggered delay
+      // Trail particles with GPU transforms
       for (let i = TRAIL_COUNT - 1; i > 0; i--) {
-        trailPositions.current[i].x += (trailPositions.current[i - 1].x - trailPositions.current[i].x) * (TRAIL_DECAY - i * 0.05);
-        trailPositions.current[i].y += (trailPositions.current[i - 1].y - trailPositions.current[i].y) * (TRAIL_DECAY - i * 0.05);
+        trailPositions.current[i].x += (trailPositions.current[i - 1].x - trailPositions.current[i].x) * (TRAIL_DECAY - i * 0.06);
+        trailPositions.current[i].y += (trailPositions.current[i - 1].y - trailPositions.current[i].y) * (TRAIL_DECAY - i * 0.06);
       }
-      trailPositions.current[0].x += (mousePos.current.x - trailPositions.current[0].x) * 0.3;
-      trailPositions.current[0].y += (mousePos.current.y - trailPositions.current[0].y) * 0.3;
+      trailPositions.current[0].x += (mousePos.current.x - trailPositions.current[0].x) * 0.35;
+      trailPositions.current[0].y += (mousePos.current.y - trailPositions.current[0].y) * 0.35;
 
-      trailRefs.current.forEach((ref, i) => {
+      for (let i = 0; i < TRAIL_COUNT; i++) {
+        const ref = trailRefs.current[i];
         if (ref) {
-          ref.style.left = `${trailPositions.current[i].x}px`;
-          ref.style.top = `${trailPositions.current[i].y}px`;
-          ref.style.opacity = `${0.4 - i * 0.06}`;
-          ref.style.width = `${4 - i * 0.5}px`;
-          ref.style.height = `${4 - i * 0.5}px`;
+          ref.style.transform = `translate3d(${trailPositions.current[i].x}px, ${trailPositions.current[i].y}px, 0) translate(-50%, -50%)`;
         }
-      });
+      }
 
       rafRef.current = requestAnimationFrame(animate);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mousedown', handleMouseDown, { passive: true });
+    window.addEventListener('mouseup', handleMouseUp, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
 
     rafRef.current = requestAnimationFrame(animate);
 
-    // Add cursor:none to dynamically added elements via MutationObserver
-    const observer = new MutationObserver(() => {
-      document.querySelectorAll('a, button, input, textarea, select, [role="button"]').forEach(el => {
-        el.style.cursor = 'none';
-      });
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-
     return () => {
-      document.body.style.cursor = '';
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(rafRef.current);
-      observer.disconnect();
     };
-  }, [isInteractive, isTextInput]);
+  }, []);
 
   return (
-    <div className={`custom-cursor ${cursorState}`}>
+    <div className="custom-cursor" ref={cursorWrapperRef}>
       {Array.from({ length: TRAIL_COUNT }).map((_, i) => (
         <div
           key={`trail-${i}`}

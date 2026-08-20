@@ -6,130 +6,157 @@ export default function ParticleBackground() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let animationId;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
 
+    let animationId;
+    let isVisible = true;
+
+    // Detect mobile vs desktop - cap DPR at 1.5 for crisp retina display with low fill-rate load
+    const isMobile = window.innerWidth <= 768;
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.2 : 1.5);
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    const setSize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    setSize();
+
+    let resizeTimeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(setSize, 120);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    let lastTime = 0;
+
+    // Handle tab visibility to pause when inactive and reset clock smoothly
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+      if (isVisible) {
+        lastTime = performance.now();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Mouse tracking with smooth exponential decay
     const mouse = { x: width / 2, y: height / 2, targetX: width / 2, targetY: height / 2, active: false };
 
-    const handleResize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', handleResize);
-
-    const auroras = [
-      { baseX: 0.2, baseY: 0.25, radius: Math.min(width, height) * 0.5, color: '168, 85, 247', speed: 0.0007, amplitude: 150, phase: 0, alpha: 0.16 },
-      { baseX: 0.78, baseY: 0.6, radius: Math.min(width, height) * 0.55, color: '139, 92, 246', speed: 0.0005, amplitude: 170, phase: 2.1, alpha: 0.13 },
-      { baseX: 0.5, baseY: 0.88, radius: Math.min(width, height) * 0.42, color: '99, 102, 241', speed: 0.0008, amplitude: 120, phase: 4.2, alpha: 0.11 },
-      { baseX: 0.88, baseY: 0.18, radius: Math.min(width, height) * 0.38, color: '56, 189, 248', speed: 0.0006, amplitude: 130, phase: 1.3, alpha: 0.08 },
-      { baseX: 0.35, baseY: 0.55, radius: Math.min(width, height) * 0.3, color: '217, 70, 239', speed: 0.0009, amplitude: 90, phase: 3.5, alpha: 0.06 },
-    ];
-
-    const starCount = Math.min(Math.floor((width * height) / 18000), 70);
+    // Sparkling stardust particles
+    const starCount = isMobile ? 22 : 48;
     const stars = Array.from({ length: starCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 1.6 + 0.3,
-      speedY: Math.random() * 0.2 + 0.05,
-      speedX: (Math.random() - 0.5) * 0.1,
-      baseAlpha: Math.random() * 0.45 + 0.12,
-      pulseSpeed: Math.random() * 0.018 + 0.004,
+      size: Math.random() * 1.4 + 0.35,
+      speedY: Math.random() * 0.15 + 0.04,
+      speedX: (Math.random() - 0.5) * 0.05,
+      baseAlpha: Math.random() * 0.35 + 0.15,
+      pulseSpeed: Math.random() * 0.015 + 0.005,
       pulsePhase: Math.random() * Math.PI * 2,
-      color: ['192, 132, 252', '237, 233, 254', '168, 85, 247', '56, 189, 248'][Math.floor(Math.random() * 4)],
     }));
 
-    // Shooting stars
+    // Meteors / Shooting Stars
     const shootingStars = [];
+    const maxShootingStars = isMobile ? 3 : 5;
+
     const spawnShootingStar = () => {
-      if (shootingStars.length >= 5) return;
+      if (shootingStars.length >= maxShootingStars) return;
+
+      const startX = Math.random() * (width * 1.2) - (width * 0.1);
+      const startY = Math.random() * (height * 0.35);
+      const angle = (Math.PI / 6) + (Math.random() * 0.35);
+      const speed = isMobile ? (Math.random() * 5 + 4) : (Math.random() * 7 + 5);
+      const length = Math.random() * 130 + 70;
+
       shootingStars.push({
-        x: Math.random() * width,
-        y: Math.random() * height * 0.5,
-        length: Math.random() * 120 + 50,
-        speed: Math.random() * 5 + 3.5,
-        angle: (Math.PI / 7) + Math.random() * (Math.PI / 5),
+        x: startX,
+        y: startY,
+        length,
+        speed,
+        angle,
+        dx: Math.cos(angle) * speed,
+        dy: Math.sin(angle) * speed,
         alpha: 1,
         life: 0,
-        maxLife: Math.random() * 50 + 30,
+        maxLife: Math.random() * 45 + 35,
+        thickness: Math.random() * 1.4 + 1.2,
       });
     };
 
-    let time = 0;
     let shootingTimer = 0;
+    let time = 0;
+    const spawnThreshold = isMobile ? 70 : 42;
 
-    const render = () => {
-      time += 1;
-      shootingTimer += 1;
-      ctx.clearRect(0, 0, width, height);
-
-      mouse.x += (mouse.targetX - mouse.x) * 0.035;
-      mouse.y += (mouse.targetY - mouse.y) * 0.035;
-
-      // Aurora light fields
-      auroras.forEach((aurora) => {
-        const cx = aurora.baseX * width + Math.sin(time * aurora.speed + aurora.phase) * aurora.amplitude;
-        const cy = aurora.baseY * height + Math.cos(time * aurora.speed * 0.7 + aurora.phase) * aurora.amplitude;
-        const finalX = cx + (mouse.x - width / 2) * 0.06;
-        const finalY = cy + (mouse.y - height / 2) * 0.06;
-
-        const gradient = ctx.createRadialGradient(finalX, finalY, 0, finalX, finalY, aurora.radius);
-        gradient.addColorStop(0, `rgba(${aurora.color}, ${aurora.alpha})`);
-        gradient.addColorStop(0.4, `rgba(${aurora.color}, ${aurora.alpha * 0.35})`);
-        gradient.addColorStop(1, `rgba(${aurora.color}, 0)`);
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, width, height);
-      });
-
-      // Cursor halo
-      if (mouse.active) {
-        const cursorGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 300);
-        cursorGlow.addColorStop(0, 'rgba(168, 85, 247, 0.14)');
-        cursorGlow.addColorStop(0.4, 'rgba(139, 92, 246, 0.05)');
-        cursorGlow.addColorStop(1, 'rgba(168, 85, 247, 0)');
-        ctx.fillStyle = cursorGlow;
-        ctx.fillRect(0, 0, width, height);
+    const render = (now) => {
+      if (!isVisible) {
+        animationId = requestAnimationFrame(render);
+        return;
       }
 
-      // Stardust
-      stars.forEach((star) => {
-        star.y -= star.speedY;
-        star.x += star.speedX;
+      if (!lastTime) lastTime = now;
+      const dt = Math.min((now - lastTime) / 16.667, 2);
+      lastTime = now;
+      time += dt;
+      shootingTimer += dt;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Smooth frame-rate independent mouse interpolation
+      if (!isMobile && mouse.active) {
+        const factor = 1 - Math.exp(-0.06 * dt);
+        mouse.x += (mouse.targetX - mouse.x) * factor;
+        mouse.y += (mouse.targetY - mouse.y) * factor;
+
+        // Ambient cursor highlight
+        const cursorGlow = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 220);
+        cursorGlow.addColorStop(0, 'rgba(255, 255, 255, 0.035)');
+        cursorGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = cursorGlow;
+        ctx.fillRect(mouse.x - 220, mouse.y - 220, 440, 440);
+      }
+
+      // 1. Stardust Particles (High-throughput render)
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
+        star.y -= star.speedY * dt;
+        star.x += star.speedX * dt;
+
         if (star.y < -10) star.y = height + 10;
         if (star.x < -10) star.x = width + 10;
         if (star.x > width + 10) star.x = -10;
 
-        const alpha = star.baseAlpha + Math.sin(time * star.pulseSpeed + star.pulsePhase) * 0.22;
-        const finalAlpha = Math.max(0.06, Math.min(0.9, alpha));
+        const pulse = Math.sin(time * star.pulseSpeed + star.pulsePhase) * 0.18;
+        const alpha = Math.max(0.08, Math.min(0.85, star.baseAlpha + pulse));
 
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${star.color}, ${finalAlpha})`;
+        ctx.fillStyle = `rgba(240, 240, 240, ${alpha})`;
         ctx.fill();
+      }
 
-        if (star.size > 1.1) {
-          ctx.beginPath();
-          ctx.arc(star.x, star.y, star.size * 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${star.color}, ${finalAlpha * 0.15})`;
-          ctx.fill();
-        }
-      });
-
-      // Shooting stars
-      if (shootingTimer > 60 + Math.random() * 100) {
+      // 2. Meteors / Shooting Stars
+      if (shootingTimer > spawnThreshold + Math.random() * 80) {
         spawnShootingStar();
         shootingTimer = 0;
       }
 
       for (let i = shootingStars.length - 1; i >= 0; i--) {
         const s = shootingStars[i];
-        s.life += 1;
-        s.x += Math.cos(s.angle) * s.speed;
-        s.y += Math.sin(s.angle) * s.speed;
-        s.alpha = 1 - (s.life / s.maxLife);
+        s.life += dt;
+        s.x += s.dx * dt;
+        s.y += s.dy * dt;
+        s.alpha = Math.max(0, 1 - (s.life / s.maxLife));
 
-        if (s.life >= s.maxLife) {
+        if (s.life >= s.maxLife || s.x > width + 150 || s.y > height + 150) {
           shootingStars.splice(i, 1);
           continue;
         }
@@ -137,28 +164,38 @@ export default function ParticleBackground() {
         const tailX = s.x - Math.cos(s.angle) * s.length;
         const tailY = s.y - Math.sin(s.angle) * s.length;
 
-        const grad = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
-        grad.addColorStop(0, `rgba(192, 132, 252, 0)`);
-        grad.addColorStop(0.7, `rgba(192, 132, 252, ${s.alpha * 0.4})`);
-        grad.addColorStop(1, `rgba(255, 255, 255, ${s.alpha * 0.9})`);
+        // Meteor Trail Gradient
+        const trailGrad = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
+        trailGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        trailGrad.addColorStop(0.6, `rgba(210, 210, 210, ${s.alpha * 0.3})`);
+        trailGrad.addColorStop(0.9, `rgba(245, 245, 245, ${s.alpha * 0.75})`);
+        trailGrad.addColorStop(1, `rgba(255, 255, 255, ${s.alpha * 0.95})`);
 
         ctx.beginPath();
         ctx.moveTo(tailX, tailY);
         ctx.lineTo(s.x, s.y);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = trailGrad;
+        ctx.lineWidth = s.thickness;
+        ctx.lineCap = 'round';
         ctx.stroke();
 
+        // Glowing Meteor Head
         ctx.beginPath();
-        ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha * 0.8})`;
+        ctx.arc(s.x, s.y, s.thickness * 1.3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha * 0.95})`;
+        ctx.fill();
+
+        // Luminous Head Glow
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.thickness * 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha * 0.2})`;
         ctx.fill();
       }
 
       animationId = requestAnimationFrame(render);
     };
 
-    render();
+    animationId = requestAnimationFrame(render);
 
     const handleMouseMove = (e) => {
       mouse.targetX = e.clientX;
@@ -172,35 +209,20 @@ export default function ParticleBackground() {
       mouse.targetY = height / 2;
     };
 
-    const handleTouchMove = (e) => {
-      const touch = e.touches[0];
-      if (touch) {
-        mouse.targetX = touch.clientX;
-        mouse.targetY = touch.clientY;
-        mouse.active = true;
-      }
-    };
-
-    const handleTouchEnd = () => {
-      setTimeout(() => {
-        mouse.active = false;
-        mouse.targetX = width / 2;
-        mouse.targetY = height / 2;
-      }, 1500);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    document.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      document.addEventListener('mouseleave', handleMouseLeave);
+    }
 
     return () => {
       cancelAnimationFrame(animationId);
+      clearTimeout(resizeTimeout);
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (!isMobile) {
+        window.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseleave', handleMouseLeave);
+      }
     };
   }, []);
 
@@ -216,6 +238,9 @@ export default function ParticleBackground() {
         height: '100%',
         zIndex: 0,
         pointerEvents: 'none',
+        transform: 'translateZ(0)',
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
       }}
     />
   );
